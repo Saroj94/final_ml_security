@@ -10,6 +10,7 @@ ssl
 scikit-learn
 pyyaml
 dill
+mlflow
 ##-e.  
 ##as we try to install the packages from the local directory we use -e ., it actually help us to 
 ## refer the current directory where the setup.py file is present and install the packages from there.
