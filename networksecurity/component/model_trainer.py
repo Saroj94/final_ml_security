@@ -15,6 +15,11 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import r2_score
 import mlflow
 
+import dagshub
+##initializing the daghub objct
+dagshub.init(repo_owner='Saroj94', repo_name='final_ml_security', mlflow=True)
+
+
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,
                   data_transformation_artifact:DataTransformationArtifact):
@@ -102,7 +107,7 @@ class ModelTrainer:
         ##track the entire experiment with mlflow
         self.track_mlflow(best_model,classification_train_metric)
 
-        
+
         y_test_pred=best_model.predict(x_test)
         classification_test_metric=get_classification_score(y_actual=y_test,y_pred=y_test_pred)
 
@@ -114,6 +119,9 @@ class ModelTrainer:
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path,obj=Network_Model)
+        
+        ##model pusher into a folder
+        save_object("final_model/model.pkl",best_model)
 
         ##model trainer artifact
         Model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
