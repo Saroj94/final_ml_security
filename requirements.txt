@@ -5,8 +5,6 @@ pandas
 numpy
 pymongo
 pymongo[srv]==3.6
-certifi
-ssl
 scikit-learn
 pyyaml
 dill

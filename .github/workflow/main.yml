@@ -1,8 +1,4 @@
-##this setting configuration is specially for github action to run the test
-
 name: workflow
-
-##what command to run is (on: push) or (on: pull_request)
 on:
   push:
     branches:
@@ -11,7 +7,6 @@ on:
       - "README.md"
 
 
-##specify the job
 jobs:
   integration:
     name: Continuous Integration
