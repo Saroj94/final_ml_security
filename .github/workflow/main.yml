@@ -3,9 +3,8 @@ on:
   push:
     branches:
       - main
-    path-ignore:
+    paths-ignore:  # Corrected key
       - "README.md"
-
 
 jobs:
   integration:
@@ -15,8 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: lint code
-        run: echo "linting repository"
+      - name: Lint code
+        run: echo "Linting repository"
 
       - name: Run unit tests
-        run: echo "Running unit tests"  
+        run: echo "Running unit tests"
