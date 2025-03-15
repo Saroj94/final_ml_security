@@ -10,7 +10,7 @@ pyyaml
 dill
 mlflow
 dagshub
-fatsapi==0.115.11
+fatsapi==0.75.0
 unvicorn
 
 # requirements.txt
