@@ -11,6 +11,12 @@ jobs:
     name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
+      steps:
+      - name: Clean up disk space
+        run: |
+          docker system prune -f
+          sudo rm -rf /var/lib/docker/tmp/*
+        
       - name: Checkout code
         uses: actions/checkout@v3
 
