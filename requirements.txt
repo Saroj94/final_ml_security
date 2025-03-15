@@ -11,7 +11,7 @@ dill
 mlflow
 dagshub
 fastapi
-unvicorn
+uvicorn
 
 # requirements.txt
 dagshub==0.5.9
