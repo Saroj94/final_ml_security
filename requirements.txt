@@ -12,6 +12,12 @@ mlflow
 dagshub
 fatsapi
 unvicorn
+
+# requirements.txt
+dagshub==0.5.9
+# fatsapi==<version>  # Comment out or correct this line
+# If fatsapi is a custom package, provide a direct link
+# e.g., https://path-to-your-package/fatsapi-0.1.0-py3-none-any.whl
 ##-e.  
 ##as we try to install the packages from the local directory we use -e ., it actually help us to 
 ## refer the current directory where the setup.py file is present and install the packages from there.
