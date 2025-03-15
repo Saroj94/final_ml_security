@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths-ignore:  # Corrected key
-      - "README.md"
+      - 'README.md'
 
 jobs:
   integration:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lint code
-        run: echo "Linting repository"
+        run: echo 'Linting repository'
 
       - name: Run unit tests
-        run: echo "Running unit tests"
+        run: echo 'Running unit tests'
