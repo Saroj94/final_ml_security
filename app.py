@@ -44,12 +44,12 @@ templates = Jinja2Templates(directory="./templates")
 async def index():
     return RedirectResponse(url="/docs")
 
-@app.get("train")
+@app.get("/train")
 async def train_route():
     try:
         train_pipeline = TrainingPipeline()
         train_pipeline=train_pipeline.run_pipeline()
-        return Response({"message":"Training Pipeline Completed Successfully"})
+        return Response("Training Pipeline Completed Successfully")
     except Exception as e:
         raise NetworkSecurityException("Error in training pipeline", e)
 

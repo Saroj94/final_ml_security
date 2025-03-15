@@ -20,11 +20,17 @@ from networksecurity.entity.artifact_entity import (
     ModelTrainerArtifact
 )
 
+from networksecurity.constant.training_pipeline import TRAINING_BUCKET_NAME
+from networksecurity.cloud.s3_syncer import S3Sync
+from networksecurity.constant.training_pipeline import SAVED_MODEL_DIR
+import sys
+
 
 class TrainingPipeline:
     def __init__(self):
         ## Initialize the configuration objects
         self.training_pipeline_config = TrainingPipelineConfig()
+        self.s3_sync = S3Sync()
 
     def start_data_ingestion(self):
         try:
@@ -71,10 +77,28 @@ class TrainingPipeline:
             model_trainer=ModelTrainer(data_transformation_artifact=data_transformation_artifact,
                                        model_trainer_config=self.model_trainer_config)
             
-            model_trainer_artifact=model_trainer.initiate_model_training()
+            model_trainer_artifact=model_trainer.initiate_model_trainer()
             return model_trainer_artifact
         except Exception as e:
             raise NetworkSecurityException("Error in model training", e)
+        
+     ## sync the artifacts directory to s3§   
+    def sync_artifacts_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder=self.training_pipeline_config.artifact_dir, aws_bucket_url=aws_bucket_url)
+        except Exception as e:
+            raise NetworkSecurityException("Error in syncing artifacts to s3", e)
+        
+
+     ## sync the saved model directory to s3   
+    def sync_saved_model_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/final_model/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder=self.training_pipeline_config.model_dir, aws_bucket_url=aws_bucket_url)
+
+        except Exception as e:
+            raise NetworkSecurityException("Error in syncing saved model to s3", e)
         
     def run_pipeline(self):
         try:
@@ -86,6 +110,12 @@ class TrainingPipeline:
             data_transformation_artifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
             ## start the model training process
             model_trainer_artifact = self.start_model_training(data_transformation_artifact=data_transformation_artifact)
+
+            ## sync the artifacts directory to s3
+            self.sync_artifacts_dir_to_s3()
+            ## sync the saved model directory to s3
+            self.sync_saved_model_dir_to_s3()
+
             return model_trainer_artifact
         except Exception as e:
             raise NetworkSecurityException("Error in training pipeline", e)

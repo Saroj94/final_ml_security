@@ -58,3 +58,6 @@ MODEL_TRAINER_OVER_FITTING_UNDER_FITTING_THRESHOLD: float=0.05
 "Save model"
 SAVED_MODEL_DIR = os.path.join("saved_model")
 MODEL_FILE_NAME = "model.pkl"
+
+"""s3 aws bucket name"""
+TRAINING_BUCKET_NAME = "networksecurities"

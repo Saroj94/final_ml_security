@@ -1,0 +1,27 @@
+##this setting configuration is specially for github action to run the test
+
+name: workflow
+
+##what command to run is (on: push) or (on: pull_request)
+on:
+  push:
+    branches:
+      - main
+    path-ignore:
+      - "README.md"
+
+
+##specify the job
+jobs:
+  integration:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: lint code
+        run: echo "linting repository"
+
+      - name: Run unit tests
+        run: echo "Running unit tests"  
