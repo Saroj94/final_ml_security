@@ -78,7 +78,7 @@ jobs:
       ## Pull the latest Docker image from ECR
       - name: Pull latest images
         run: |
-          docker pull ${{ secrects.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
       # - name: Stop and remove the running container 
       #   run: |
